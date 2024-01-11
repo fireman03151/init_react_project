@@ -22,18 +22,22 @@ exports.SignUp = async (req, res) => {
 			});
 	}
 };
-exports.SignIn = async (req, res) => {
-	await User.findOne({ useremail: req.body.email })
-		.then(async (result) => {
-			console.log(result);
+exports.SignIn = (req, res) => {
+	User.findOne({ useremail: req.body.email })
+		.then((result) => {
+			if (!result) {
+				res.send('error');
+			};
 			if (result.password == req.body.password) {
-				await User.findOneAndUpdate(
+				User.findOneAndUpdate(
 					{ useremail: result.useremail },
-					{ connected: true }
+					{ $set: { connected: true } }
 				).then((result) => {
 					res.send("Login");
 				});
-			}
+			} else {
+				res.send('error');
+			};
 		})
 		.catch((error) => {
 			console.log(error);

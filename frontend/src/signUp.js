@@ -101,7 +101,7 @@ const SignUp = () => {
             </Row>
             <Row style={{ width: '100%', marginTop: '-1vh', marginLeft: '25%' }}>
               Already have an account?
-              <Link href='/signin'>Login</Link>
+              <Link href='/'>Login</Link>
             </Row>
           </Row>
         </Col>

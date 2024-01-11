@@ -1,9 +1,21 @@
 import React from "react"
+import axios from 'axios';
 import { Row, Input, Col, Modal, Button, Divider, Typography, Form, Checkbox } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 const { Link } = Typography;
 
 const SignUp = () => {
+
+  const onFinish = (e) => {
+    axios.post('http://localhost:5000/api/user/signup/', e)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   return (
     <Modal
       visible={true}
@@ -13,32 +25,12 @@ const SignUp = () => {
       style={{ borderRadius: '16px', padding: '24px', gap: '24px' }}
     >
       <Row style={{ height: '509px' }} >
-        <Col span={8} className='Background_signUp' />
-        <Col offset={1} span={15}>
+        <Col xxl={{ span: 8 }} xl={{ span: 8 }} lg={{ span: 8 }} md={{ span: 8 }} sm={{ span: 0 }} xs={{ span: 0 }} xxs={{ span: 0 }} className='Background_signUp' />
+        <Col xxl={{ offset: 1, span: 15 }} xl={{ offset: 1, span: 15 }} lg={{ offset: 1, span: 15 }} md={{ offset: 1, span: 15 }} sm={{ span: 24 }} xs={{ span: 24 }} xxs={{ span: 24 }}>
           <Row style={{ width: '100%', padding: '24px 0px 0px 0px', gap: '24px', flexColume: 'auto' }} >
             <Row style={{ width: '100%', height: '28px', backgroundRepeat: 'no-repeat', padding: '24px 0px 0px 0px', backgroundPosition: 'center' }} className='logo' />
             <Row style={{ width: '100%', height: '35px', backgroundRepeat: 'no-repeat', backgroundPosition: 'top' }} className='logo_signUp' />
             <Row style={{ width: '100%', height: '200px', gap: '10px' }}>
-              {/* <Row style={{ width: '100%', height: '17px', fontSize: '14px' }}>
-                Email Address
-              </Row>
-              <Row style={{ width: '100%' }}>
-                <Input prefix={<SearchOutlined />} placeholder="Please Input here" style={{ width: '100%', height: '32px', padding: '8px', gap: '8px', borderRadius: '8px', color: '#D8D7E8' }} />
-              </Row>
-            </Row>
-            <Row style={{ width: '100%', height: '59px', gap: '10px' }}> */}
-              {/* <Row style={{ width: '100%', height: '17px', fontSize: '14px' }}>
-                User Password
-              </Row>
-              <Row style={{ width: '100%' }}>
-                <Input.Password placeholder="Please Input here" style={{ width: '100%', height: '32px', padding: '8px', gap: '8px', borderRadius: '8px', color: '#D8D7E8' }} />
-              </Row>
-            </Row>
-            <Row style={{ width: '100%', height: '32px' }}>
-              <Button style={{
-                width: '100%', height: '32px', backgroundColor: '#3B368D', fontSize: '14px', gap: '10px', color: '#EBEBF4', borderRadius: '8px',
-                font: 'Rubik'
-              }}>Sign Up</Button> */}
               <Form
                 name="basic"
                 labelCol={{
@@ -52,7 +44,7 @@ const SignUp = () => {
                 }}
                 requiredMark={false}
                 style={{ margin: 'auto', width: '100%' }}
-                // onFinish={onFinish}
+                onFinish={onFinish}
                 // onFinishFailed={onFinishFailed}
                 autoComplete="off"
               >
@@ -71,8 +63,9 @@ const SignUp = () => {
                   <Input prefix={<SearchOutlined />} placeholder="Please input here" />
                 </Form.Item>
                 <Form.Item
-                  label="Password"
+                  label="User Password"
                   name="password"
+                  style={{ marginTop: '-1vh' }}
                   rules={[
                     {
                       required: true,
@@ -80,7 +73,7 @@ const SignUp = () => {
                     },
                   ]}
                 >
-                  <Input.Password />
+                  <Input.Password placeholder="Please input here" />
                 </Form.Item>
                 <Form.Item
                   wrapperCol={{
@@ -88,7 +81,7 @@ const SignUp = () => {
                     span: 24,
                   }}
                 >
-                  <Button style={{
+                  <Button htmlType="submit" style={{
                     width: '100%', height: '32px', backgroundColor: '#3B368D', fontSize: '14px', gap: '10px', color: '#EBEBF4', borderRadius: '8px',
                     font: 'Rubik'
                   }}>Sign Up</Button>
@@ -106,9 +99,9 @@ const SignUp = () => {
                 font: 'Rubik'
               }}>Facebook</Button>
             </Row>
-            <Row style={{ width: '100%', marginTop: '-1vh' }}>
+            <Row style={{ width: '100%', marginTop: '-1vh', marginLeft: '25%' }}>
               Already have an account?
-              <Link>Login</Link>
+              <Link href='/signin'>Login</Link>
             </Row>
           </Row>
         </Col>

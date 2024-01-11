@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Row, Layout, Col, Menu, Input, Badge, Avatar, Button, Breadcrumb, Tabs, Dropdown, Space, List, Tag } from 'antd';
 import { Link, useNavigate } from "react-router-dom";
 import { LiaBookSolid, LiaCoinsSolid } from "react-icons/lia";
@@ -8,10 +9,19 @@ import { MailOutlined, AppstoreOutlined, HomeOutlined, SearchOutlined, ShoppingO
 const { Header, Content, Footer } = Layout;
 
 const PostJob = () => {
-
+	const [mainData, setMainData] = useState([]);
+	useEffect(() => {
+		axios.get('http://localhost:5000/api/job/')
+			.then(result => {
+				console.log(result.data);
+				setMainData(result.data);
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	}, []);
 	const navigate = useNavigate();
 	const handleClick = () => {
-		// Navigate to a different route
 		navigate('/postjob');
 	};
 	const items = [
@@ -78,7 +88,7 @@ const PostJob = () => {
 		// <Row style={{ width: '100%' }}>
 		<List
 			itemLayout="horizontal"
-			dataSource={data}
+			dataSource={mainData ? mainData : []}
 			pagination
 			renderItem={(item, index) => (
 				<List.Item >
@@ -92,17 +102,18 @@ const PostJob = () => {
 								<Col offset={16} span={3}>
 									<LiaCoinsSolid style={{ fontSize: '20px' }} /> &nbsp;
 									<Tag color="#B3B3B3" style={{ borderRadius: '50px', transform: 'translate(0%,-20%)' }}>
-										fixed 30$
+										{item.average_order}
 									</Tag>
 								</Col>
 							</Row>
 						}
-						description="We are currently seeking a talented and passionate frontend developer to join our team. As a frontend developer, you will be responsible for creating visually appealing and user-friendly interfaces that enhance the overall user experience of our web applications."
+						description={
+							item.job_description
+						}
 					/>
 				</List.Item>
 			)}
 		/>
-		// </Row>
 	);
 
 	let drop_items = [
@@ -239,7 +250,7 @@ const PostJob = () => {
 												</Dropdown>
 											</Col>
 											<Col offset={1}>
-												<Button icon={<MdEditDocument />} style={{ backgroundColor: '#3B368D', color: 'white' }}>Post My Job</Button>
+												<Button icon={<MdEditDocument />} style={{ backgroundColor: '#3B368D', color: 'white' }} onClick={() => { navigate('/postjob') }}>Post My Job</Button>
 											</Col>
 										</Row>}
 								/>

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import axios from 'axios'
-import { Row, Layout, Col, Menu, Input, Badge, Avatar, Button, Breadcrumb, Switch, Form } from 'antd';
-import { Link } from "react-router-dom";
+import { Row, Layout, Col, Menu, Input, Badge, Avatar, Button, Breadcrumb, Switch, Form, notification } from 'antd';
+import { Link, useNavigate } from "react-router-dom";
 import { FaRegMessage } from "react-icons/fa6";
 import { BiSolidBookAdd } from "react-icons/bi";
 import { HiDocumentReport } from "react-icons/hi";
@@ -9,7 +9,15 @@ import PostJob_Style from "./postJob.style";
 import { MailOutlined, HomeOutlined, SearchOutlined, BellOutlined, UserOutlined, UserAddOutlined, TwitterOutlined, YoutubeOutlined, FacebookOutlined } from '@ant-design/icons';
 
 const PostJob = () => {
-
+  const navigate = useNavigate();
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type) => {
+    api[type]({
+      message: 'Success',
+      description:
+        'Post Job Success',
+    });
+  };
   const { Header, Content, Footer } = Layout;
 
   const items = [
@@ -78,7 +86,11 @@ const PostJob = () => {
   const onFinish = (e) => {
     axios.post('http://localhost:5000/api/job', e)
       .then((result) => {
-        console.log(result.data);
+        if (result.data == 'ok') {
+          openNotificationWithIcon('success')
+          navigate('/joblist');
+        }
+
       })
       .catch(err => {
         console.log(err);
@@ -201,7 +213,7 @@ const PostJob = () => {
                   rules={[
                     { required: true, message: 'Please input your Company Name!' },
                     { min: 3, message: 'Username must be at least 3 characters long' },
-                    { pattern: /^[a-zA-Z0-9_]+$/, message: 'Company Name can only contain letters, numbers, and underscores' }
+                    { pattern: /^[a-zA-Z0-9_ ]+$/, message: 'Company Name can only contain letters, numbers, and underscores' }
                   ]}
                 >
                   <Input placeholder="Please input here" />
@@ -213,7 +225,7 @@ const PostJob = () => {
                   rules={[
                     { required: true, message: 'Please input your Hiring Manager Name!' },
                     { min: 3, message: 'Username must be at least 3 characters long' },
-                    { pattern: /^[a-zA-Z0-9_]+$/, message: 'Hiring Manager Name can only contain letters, numbers, and underscores' }
+                    { pattern: /^[a-zA-Z0-9_ ]+$/, message: 'Hiring Manager Name can only contain letters, numbers, and underscores' }
                   ]}
                 >
                   <Input placeholder="Please input here" />
@@ -236,7 +248,7 @@ const PostJob = () => {
                   rules={[
                     { required: true, message: 'Please input your Hiring Address!' },
                     { min: 3, message: 'Username must be at least 3 characters long' },
-                    { pattern: /^[a-zA-Z0-9_]+$/, message: 'Hiring Address can only contain letters, numbers, and underscores' }
+                    { pattern: /^[a-zA-Z0-9_ ]+$/, message: 'Hiring Address can only contain letters, numbers, and underscores' }
                   ]}
                   label='Address'
                   name='address'
@@ -248,7 +260,7 @@ const PostJob = () => {
                   rules={[
                     { required: true, message: 'Please input your City!' },
                     { min: 3, message: 'Username must be at least 3 characters long' },
-                    { pattern: /^[a-zA-Z0-9_]+$/, message: 'City can only contain letters, numbers, and underscores' }
+                    { pattern: /^[a-zA-Z0-9_ ]+$/, message: 'City can only contain letters, numbers, and underscores' }
                   ]}
                   label='City'
                   name='city'
@@ -259,7 +271,7 @@ const PostJob = () => {
                   rules={[
                     { required: true, message: 'Please input your ZIP!' },
                     { min: 3, message: 'Username must be at least 3 characters long' },
-                    { pattern: /^[a-zA-Z0-9_]+$/, message: 'ZIP can only contain letters, numbers, and underscores' }
+                    { pattern: /^[a-zA-Z0-9_ ]+$/, message: 'ZIP can only contain letters, numbers, and underscores' }
                   ]}
                   colon={false}
                   label='Zip'
@@ -274,7 +286,7 @@ const PostJob = () => {
                   rules={[
                     { required: true, message: 'Please input your Role Type!' },
                     { min: 3, message: 'Username must be at least 3 characters long' },
-                    { pattern: /^[a-zA-Z0-9_]+$/, message: 'Role Type can only contain letters, numbers, and underscores' }
+                    { pattern: /^[a-zA-Z0-9_ ]+$/, message: 'Role Type can only contain letters, numbers, and underscores' }
                   ]}
                 >
                   <Input placeholder="Please input here" />
@@ -284,7 +296,7 @@ const PostJob = () => {
                   rules={[
                     { required: true, message: 'Please input your Title!' },
                     { min: 3, message: 'Username must be at least 3 characters long' },
-                    { pattern: /^[a-zA-Z0-9_]+$/, message: 'Title can only contain letters, numbers, and underscores' }
+                    { pattern: /^[a-zA-Z0-9_ ]+$/, message: 'Title can only contain letters, numbers, and underscores' }
                   ]}
                   label='Title'
                   name='title'
@@ -298,7 +310,7 @@ const PostJob = () => {
                   rules={[
                     { required: true, message: 'Please input your Compensation Type!' },
                     { min: 3, message: 'Username must be at least 3 characters long' },
-                    { pattern: /^[a-zA-Z0-9_]+$/, message: 'Compensation Type can only contain letters, numbers, and underscores' }
+                    { pattern: /^[a-zA-Z0-9_ ]+$/, message: 'Compensation Type can only contain letters, numbers, and underscores' }
                   ]}
                 >
                   <Input placeholder="Please input here" />
@@ -310,7 +322,7 @@ const PostJob = () => {
                   rules={[
                     { required: true, message: 'Please input your Salary Amount!' },
                     { min: 3, message: 'Username must be at least 3 characters long' },
-                    { pattern: /^[a-zA-Z0-9_]+$/, message: 'Salary Amount can only contain letters, numbers, and underscores' }
+                    { pattern: /^[a-zA-Z0-9_ ]+$/, message: 'Salary Amount can only contain letters, numbers, and underscores' }
                   ]}
                 >
                   <Input placeholder="Please input here" />
@@ -322,7 +334,7 @@ const PostJob = () => {
                   rules={[
                     { required: true, message: 'Please input your OTE!' },
                     { min: 3, message: 'Username must be at least 3 characters long' },
-                    { pattern: /^[a-zA-Z0-9_]+$/, message: 'OTE can only contain letters, numbers, and underscores' }
+                    { pattern: /^[a-zA-Z0-9_ ]+$/, message: 'OTE can only contain letters, numbers, and underscores' }
                   ]}
                 >
                   <Input placeholder="Please input here" />
@@ -348,7 +360,7 @@ const PostJob = () => {
                   rules={[
                     { required: true, message: 'Please input your Average Order!' },
                     { min: 3, message: 'Username must be at least 3 characters long' },
-                    { pattern: /^[a-zA-Z0-9_]+$/, message: 'Average Order can only contain letters, numbers, and underscores' }
+                    { pattern: /^[a-zA-Z0-9_ ]+$/, message: 'Average Order can only contain letters, numbers, and underscores' }
                   ]}
                 >
                   <Input placeholder="Please input here" />
@@ -360,7 +372,7 @@ const PostJob = () => {
                   rules={[
                     { required: true, message: 'Please input your Industry!' },
                     { min: 3, message: 'Username must be at least 3 characters long' },
-                    { pattern: /^[a-zA-Z0-9_]+$/, message: 'Industry can only contain letters, numbers, and underscores' }
+                    { pattern: /^[a-zA-Z0-9_ ]+$/, message: 'Industry can only contain letters, numbers, and underscores' }
                   ]}
                 >
                   <Input placeholder="Please input here" />
@@ -372,7 +384,7 @@ const PostJob = () => {
                   rules={[
                     { required: true, message: 'Please input your Job Description!' },
                     { min: 3, message: 'Username must be at least 3 characters long' },
-                    { pattern: /^[a-zA-Z0-9_]+$/, message: 'Job Description can only contain letters, numbers, and underscores' }
+                    { pattern: /^[a-zA-Z0-9_ ]+$/, message: 'Job Description can only contain letters, numbers, and underscores' }
                   ]}
                 >
                   <Input placeholder="Please input here" />
@@ -391,7 +403,7 @@ const PostJob = () => {
                   rules={[
                     { required: true, message: 'Please input your Created Date!' },
                     { min: 3, message: 'Username must be at least 3 characters long' },
-                    { pattern: /^[a-zA-Z0-9_]+$/, message: 'Created Date can only contain letters, numbers, and underscores' }
+                    { pattern: /^[a-zA-Z0-9_ ]+$/, message: 'Created Date can only contain letters, numbers, and underscores' }
                   ]}
                 >
                   <Input placeholder="Please input here" />
@@ -403,7 +415,7 @@ const PostJob = () => {
                   rules={[
                     { required: true, message: 'Please input your Expiration Date!' },
                     { min: 3, message: 'Username must be at least 3 characters long' },
-                    { pattern: /^[a-zA-Z0-9_]+$/, message: 'Expiration Date can only contain letters, numbers, and underscores' }
+                    { pattern: /^[a-zA-Z0-9_ ]+$/, message: 'Expiration Date can only contain letters, numbers, and underscores' }
                   ]}
                 >
                   <Input placeholder="Please input here" />
@@ -415,7 +427,7 @@ const PostJob = () => {
                   rules={[
                     { required: true, message: 'Please input your Status!' },
                     { min: 3, message: 'Username must be at least 3 characters long' },
-                    { pattern: /^[a-zA-Z0-9_]+$/, message: 'Status can only contain letters, numbers, and underscores' }
+                    { pattern: /^[a-zA-Z0-9_ ]+$/, message: 'Status can only contain letters, numbers, and underscores' }
                   ]}
                 >
                   <Input placeholder="Please input here" />
@@ -427,7 +439,7 @@ const PostJob = () => {
                   rules={[
                     { required: true, message: 'Please input your Company Description!' },
                     { min: 3, message: 'Username must be at least 3 characters long' },
-                    { pattern: /^[a-zA-Z0-9_]+$/, message: 'Company Description can only contain letters, numbers, and underscores' }
+                    { pattern: /^[a-zA-Z0-9_ ]+$/, message: 'Company Description can only contain letters, numbers, and underscores' }
                   ]}
                 >
                   <Input placeholder="Please input here" />
@@ -439,7 +451,7 @@ const PostJob = () => {
                   rules={[
                     { required: true, message: 'Please input your Company URL!' },
                     { min: 3, message: 'Username must be at least 3 characters long' },
-                    { pattern: /^[a-zA-Z0-9_]+$/, message: 'Company URL can only contain letters, numbers, and underscores' }
+                    { pattern: /^[a-zA-Z0-9_ ]+$/, message: 'Company URL can only contain letters, numbers, and underscores' }
                   ]}
                 >
                   <Input placeholder="Please input here" />
@@ -451,7 +463,7 @@ const PostJob = () => {
                   rules={[
                     { required: true, message: 'Please input your Header Image URL!' },
                     { min: 3, message: 'Username must be at least 3 characters long' },
-                    { pattern: /^[a-zA-Z0-9_]+$/, message: 'Header Image URL can only contain letters, numbers, and underscores' }
+                    { pattern: /^[a-zA-Z0-9_ ]+$/, message: 'Header Image URL can only contain letters, numbers, and underscores' }
                   ]}
                 >
                   <Input placeholder="Please input here" />
