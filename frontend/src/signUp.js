@@ -1,15 +1,30 @@
 import React from "react"
 import axios from 'axios';
-import { Row, Input, Col, Modal, Button, Divider, Typography, Form, Checkbox } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { Row, Input, Col, Modal, Button, Divider, Typography, Form, notification } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 const { Link } = Typography;
 
 const SignUp = () => {
-
+  const navigate = useNavigate();
+  const [api, contextHolder] = notification.useNotification();
   const onFinish = (e) => {
     axios.post('http://localhost:5000/api/user/signup/', e)
       .then((result) => {
         console.log(result);
+        if (result.status == '200') {
+          api['success']({
+            message: 'Success',
+            description: result.data,
+          });
+          navigate('/');
+        } else {
+          api['error']({
+            message: 'Error',
+            description:
+              result.data,
+          });
+        }
       })
       .catch(err => {
         console.log(err);
@@ -24,6 +39,7 @@ const SignUp = () => {
       footer={null}
       style={{ borderRadius: '16px', padding: '24px', gap: '24px' }}
     >
+      {contextHolder}
       <Row style={{ height: '509px' }} >
         <Col xxl={{ span: 8 }} xl={{ span: 8 }} lg={{ span: 8 }} md={{ span: 8 }} sm={{ span: 0 }} xs={{ span: 0 }} xxs={{ span: 0 }} className='Background_signUp' />
         <Col xxl={{ offset: 1, span: 15 }} xl={{ offset: 1, span: 15 }} lg={{ offset: 1, span: 15 }} md={{ offset: 1, span: 15 }} sm={{ span: 24 }} xs={{ span: 24 }} xxs={{ span: 24 }}>
