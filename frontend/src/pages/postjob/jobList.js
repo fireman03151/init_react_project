@@ -89,7 +89,12 @@ const PostJob = () => {
 		<List
 			itemLayout="horizontal"
 			dataSource={mainData ? mainData : []}
-			pagination
+			pagination={{
+				onChange: (page) => {
+					console.log(page);
+				},
+				pageSize: 20,
+			}}
 			renderItem={(item, index) => (
 				<List.Item >
 					<List.Item.Meta
