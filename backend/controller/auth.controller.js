@@ -1,7 +1,6 @@
 const User = require("../model/User.model");
 
 exports.SignUp = async (req, res) => {
-	console.log(req.body);
 	const data = req.body;
 	const result = await User.findOne({ useremail: req.body.email });
 	if (result) {
@@ -12,14 +11,22 @@ exports.SignUp = async (req, res) => {
 			password: data.password,
 			connected: false
 		})
-			.save()
-			.then((result) => {
-				console.log("ok");
-				res.send("ok");
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+			.save(
+				function (err) {
+					if (err) {
+						res.status(500).send("Error registering new user please try again.");
+					} else {
+						res.status(200).send("Welcome to the club!");
+					}
+				}
+			);
+		// .then((result) => {
+		// 	console.log("ok");
+		// 	res.send("ok");
+		// })
+		// .catch((error) => {
+		// 	console.log(error);
+		// });
 	}
 };
 exports.SignIn = (req, res) => {

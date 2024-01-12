@@ -90,7 +90,6 @@ const PostJob = () => {
           openNotificationWithIcon('success')
           navigate('/joblist');
         }
-
       })
       .catch(err => {
         console.log(err);
