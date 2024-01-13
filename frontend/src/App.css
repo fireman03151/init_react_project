@@ -1,0 +1,98 @@
+.App {
+  text-align: center;
+}
+
+.Background {
+  width: 246px;
+  height: 509px;
+  border-radius: 8px;
+  background-image: url('./access/signUp.png');
+  background-repeat: no-repeat;
+  /* background-attachment: initial; */
+  /* background-position: center; */
+  background-size: cover;
+}
+
+.Background_signUp {
+  width: 246px;
+  height: 509px;
+  border-radius: 8px;
+  background-image: url('./access/SignIn.png');
+  background-repeat: no-repeat;
+  /* background-attachment: initial; */
+  /* background-position: center; */
+  background-size: cover;
+}
+
+.logo {
+  background: url('./access/Logo.png');
+  width: 18.94px;
+  height: 23.09px;
+  color: #3B368D;
+}
+
+.logo_signUp {
+  background: url('./access/logo_SignUp.png');
+  width: 18.94px;
+  height: 23.09px;
+  color: #3B368D;
+}
+
+.welcome {
+  background: url('./access/welcome.png');
+  width: 18.94px;
+  height: 23.09px;
+  color: #3B368D;
+}
+
+.google-icon {
+  background: url('./access/google-icon.png');
+  background-repeat: no-repeat;
+  background-position: 145px 5px;
+  width: 20px;
+  height: 20px;
+}
+
+.facebook-icon {
+  background: url('./access/facebook.png');
+  background-repeat: no-repeat;
+  background-position: 140px 5px;
+  width: 20px;
+  height: 20px;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
