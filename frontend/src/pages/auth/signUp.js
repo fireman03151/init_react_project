@@ -46,19 +46,6 @@ const SignUp = () => {
               autoComplete="off"
             >
               <Form.Item
-                label="User Password"
-                name="password"
-                style={{ marginTop: '-1vh' }}
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input your password!',
-                  },
-                ]}
-              >
-                <Input.Password placeholder="Please input here" />
-              </Form.Item>
-              <Form.Item
                 wrapperCol={{
                   // offset: 8,
                   span: 24,
