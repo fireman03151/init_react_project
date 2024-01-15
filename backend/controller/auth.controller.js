@@ -20,13 +20,6 @@ exports.SignUp = async (req, res) => {
 					}
 				}
 			);
-		// .then((result) => {
-		// 	console.log("ok");
-		// 	res.send("ok");
-		// })
-		// .catch((error) => {
-		// 	console.log(error);
-		// });
 	}
 };
 exports.SignIn = (req, res) => {
