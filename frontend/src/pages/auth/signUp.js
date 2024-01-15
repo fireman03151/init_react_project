@@ -46,20 +46,6 @@ const SignUp = () => {
               autoComplete="off"
             >
               <Form.Item
-                label="Email Address"
-                name="email"
-                rules={[
-                  {
-                    type: 'email',
-                    required: true,
-                    message: 'Please input your email!',
-                  },
-                ]}
-                style={{ marginTop: '-2vh' }}
-              >
-                <Input prefix={<SearchOutlined />} placeholder="Please input here" />
-              </Form.Item>
-              <Form.Item
                 label="User Password"
                 name="password"
                 style={{ marginTop: '-1vh' }}
