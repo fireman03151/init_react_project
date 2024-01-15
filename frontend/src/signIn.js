@@ -1,11 +1,50 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import { googleLogout, useGoogleLogin } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import { Row, Input, Col, Modal, Button, Divider, Typography, Form, notification } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 const { Link } = Typography;
 
 const SignIn = () => {
+  const [user, setUser] = useState([]);
+  const [profile, setProfile] = useState([]);
+  const responseMessage = (response) => {
+    console.log(response);
+  };
+  const errorMessage = (error) => {
+    console.log(error);
+  };
+  const login = useGoogleLogin({
+    onSuccess: (codeResponse) => setUser(codeResponse),
+    onError: (error) => console.log('Login Failed:', error),
+    flow: 'auth-code'
+  });
+  useEffect(
+    () => {
+      console.log(user);
+      if (user) {
+        axios
+          .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+            headers: {
+              Authorization: `Bearer ${user.access_token}`,
+              Accept: 'application/json'
+            }
+          })
+          .then((res) => {
+            setProfile(res.data);
+          })
+          .catch((err) => console.log(err));
+      }
+    },
+    [user]
+  );
+  const logOut = () => {
+    googleLogout();
+    setProfile(null);
+  };
+
   const navigate = useNavigate();
   const [api, contextHolder] = notification.useNotification();
   const onFinish = (e) => {
@@ -107,10 +146,28 @@ const SignIn = () => {
             </Row>
             <Divider style={{ height: '17px', font: 'Rubik', fontSize: '14px', color: '#B3B3B3', gap: '12px', marginTop: '-1.5vh' }}>or</Divider>
             <Row style={{ width: '100%', height: '76px', marginTop: '-2.5vh' }}>
-              <Button className='google-icon' style={{
-                width: '100%', height: '32px', fontSize: '12px', gap: '10px', borderRadius: '8px', color: '#3B368D',
-                font: 'Rubik'
-              }}>Google</Button>
+              {profile ? (
+                <div>
+                  <img src={profile.picture} alt="user image" />
+                  <h3>User Logged in</h3>
+                  <p>Name: {profile.name}</p>
+                  <p>Email Address: {profile.email}</p>
+                  <br />
+                  <br />
+                  <button onClick={logOut}>Log out</button>
+                </div>
+              ) : (
+                <Button className='google-icon' onClick={() => login()} style={{
+                  width: '100%', height: '32px', fontSize: '12px', gap: '10px', borderRadius: '8px', color: '#3B368D',
+                  font: 'Rubik'
+                }}>Google</Button>
+                // <button onClick={() => login()}>Sign in with Google 🚀 </button>
+              )}
+              {/* <GoogleLogin onSuccess={responseMessage} onError={errorMessage} /> */}
+              {/* <Button className='google-icon' style={{
+                  width: '100%', height: '32px', fontSize: '12px', gap: '10px', borderRadius: '8px', color: '#3B368D',
+                  font: 'Rubik'
+                }}>Google</Button> */}
               <Button className='facebook-icon' style={{
                 width: '100%', height: '32px', fontSize: '12px', gap: '10px', borderRadius: '8px', color: '#3B368D',
                 font: 'Rubik'
